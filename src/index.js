@@ -1,4 +1,4 @@
-import "dotenv/config"; // ✅ ENV LOADED BEFORE EVERYTHING
+import "dotenv/config"; // ENV LOADED BEFORE EVERYTHING
 
 import connectDB from "./db/index.js";
 import app from "./app.js";
