@@ -3,6 +3,8 @@ import { ApiError } from "../utils/apiError.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/apiResponse.js";
+import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 
 const generateAccessTokenAndRefreshToken = async(userId) => {
@@ -146,8 +148,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   // Implementation for user logout
    await User.findByIdAndUpdate(req.user._id,
      {
-       $set:{
-        refreshToken: undefined 
+       $unset:{
+        refreshToken: 1
        }
       },
       { new: true }
@@ -327,7 +329,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
   if (!username?.trim()) {
     throw new ApiError(400, "Username is required");
   }
-  const channel = awaitUser.aggregate([
+  const channel = await User.aggregate([
     {
       $match: { 
         username: username.toLowerCase()
