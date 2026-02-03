@@ -43,4 +43,20 @@ app.use("/api/v1/playlists", playlistRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
 
+// Global Error Handler
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+
+    // Log error for debugging on Render
+    console.error(`Status: ${statusCode}, Message: ${message}, Stack: ${err.stack}`);
+
+    return res.status(statusCode).json({
+        success: false,
+        message,
+        errors: err.errors || [],
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
+});
+
 export default app;
