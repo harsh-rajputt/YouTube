@@ -114,25 +114,29 @@ const publishAVideo = asyncHandler(async (req, res) => {
     }
 
     // Upload to Cloudinary
+    console.log(`Starting Cloudinary upload: Video ${videoLocalPath}, Thumbnail ${thumbnailLocalPath}`);
     const videoUpload = await uploadOnCloudinary(videoLocalPath);
     const thumbnailUpload = await uploadOnCloudinary(thumbnailLocalPath);
 
     if (!videoUpload) {
+        console.error("Cloudinary failed for video file");
         throw new ApiError(400, "Failed to upload video");
     }
     if (!thumbnailUpload) {
+        console.error("Cloudinary failed for thumbnail image");
         throw new ApiError(400, "Failed to upload thumbnail");
     }
 
     const video = await Video.create({
         title,
         description,
-        videoFile: videoUpload.url,
-        thumbnail: thumbnailUpload.url,
-        duration: videoUpload.duration, // Cloudinary provides duration
+        videoFile: videoUpload.secure_url,
+        thumbnail: thumbnailUpload.secure_url,
+        duration: videoUpload.duration || 0,
         owner: req.user._id
     });
 
+    console.log(`Video created in DB: ${video._id} for owner: ${req.user._id}`);
     const createdVideo = await Video.findById(video._id);
 
     if (!createdVideo) {
@@ -195,7 +199,7 @@ const updateVideo = asyncHandler(async (req, res) => {
         if (!thumbnailUpload) {
             throw new ApiError(400, "Failed to upload new thumbnail");
         }
-        updateFields.thumbnail = thumbnailUpload.url;
+        updateFields.thumbnail = thumbnailUpload.secure_url;
         // Optional: Delete old thumbnail from Cloudinary here if needed
     }
 
