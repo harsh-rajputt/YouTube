@@ -50,18 +50,17 @@ export const Subscriptions = () => {
 
             {channels.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    {channels.map((sub) => {
-                        const channel = sub.subscribedChannel;
+                    {channels.map((channel) => {
                         return (
                             <Link
                                 key={channel._id}
                                 to={`/channel/${channel.username}`}
-                                className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-md transition-shadow"
+                                className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow hover:shadow-md transition-shadow group"
                             >
                                 <img
                                     src={channel.avatar}
                                     alt={channel.username}
-                                    className="w-20 h-20 rounded-full mb-3 object-cover shadow-sm"
+                                    className="w-20 h-20 rounded-full mb-3 object-cover shadow-sm group-hover:scale-105 transition-transform"
                                 />
                                 <h3 className="font-bold text-center truncate w-full">{channel.fullName || channel.username}</h3>
                                 <p className="text-xs text-gray-500">@{channel.username}</p>
