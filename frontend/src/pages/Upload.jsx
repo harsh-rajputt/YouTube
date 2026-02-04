@@ -46,11 +46,11 @@ export const Upload = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-                <div className="flex items-center gap-3 mb-6">
-                    <UploadIcon className="w-8 h-8 text-primary-600" />
-                    <h1 className="text-3xl font-bold">Upload Video</h1>
+        <div className="max-w-4xl mx-auto p-4 sm:p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-8">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                    <UploadIcon className="w-6 h-6 sm:w-8 sm:h-8 text-primary-600" />
+                    <h1 className="text-2xl sm:text-3xl font-bold">Upload Video</h1>
                 </div>
 
                 {error && (

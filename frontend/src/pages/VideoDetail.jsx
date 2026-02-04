@@ -79,12 +79,12 @@ export const VideoDetail = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto p-6">
+        <div className="max-w-7xl mx-auto p-4 sm:p-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Main Video Section */}
                 <div className="lg:col-span-2 space-y-4">
                     {/* Video Player */}
-                    <div className="aspect-video bg-black rounded-lg overflow-hidden">
+                    <div className="aspect-video bg-black rounded-lg overflow-hidden -mx-4 sm:mx-0">
                         <video
                             src={video.videoFile}
                             controls
@@ -94,56 +94,56 @@ export const VideoDetail = () => {
                     </div>
 
                     {/* Video Info */}
-                    <div>
-                        <h1 className="text-2xl font-bold mb-2">{video.title}</h1>
+                    <div className="space-y-2">
+                        <h1 className="text-xl sm:text-2xl font-bold line-clamp-2">{video.title}</h1>
 
-                        <div className="flex items-center justify-between flex-wrap gap-4">
-                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                                 {formatViews(video.views)} views • {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true })}
                             </div>
 
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
                                 <button
                                     onClick={handleLike}
-                                    className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${isLiked
+                                    className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-colors whitespace-nowrap ${isLiked
                                         ? 'bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400'
                                         : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
                                         }`}
                                 >
-                                    <ThumbsUp className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
-                                    <span>{isLiked ? 'Liked' : 'Like'}</span>
+                                    <ThumbsUp className={`w-4 h-4 sm:w-5 sm:h-5 ${isLiked ? 'fill-current' : ''}`} />
+                                    <span className="text-sm sm:text-base">{isLiked ? 'Liked' : 'Like'}</span>
                                 </button>
-                                <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                                    <Share2 className="w-5 h-5" />
-                                    <span>Share</span>
+                                <button className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 whitespace-nowrap">
+                                    <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                                    <span className="text-sm sm:text-base">Share</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     {/* Channel Info */}
-                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <Link to={`/channel/${video.owner?.username}`} className="flex items-center gap-4 hover:opacity-80 transition-opacity">
+                    <div className="flex items-center justify-between p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <Link to={`/channel/${video.owner?.username}`} className="flex items-center gap-3 sm:gap-4 hover:opacity-80 transition-opacity min-w-0">
                             {video.owner?.avatar && (
                                 <img
                                     src={video.owner.avatar}
                                     alt={video.owner.username}
-                                    className="w-12 h-12 rounded-full"
+                                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full shrink-0"
                                 />
                             )}
-                            <div>
-                                <h3 className="font-semibold">{video.owner?.fullName || video.owner?.username}</h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">@{video.owner?.username}</p>
+                            <div className="min-w-0">
+                                <h3 className="font-semibold text-sm sm:text-base truncate">{video.owner?.fullName || video.owner?.username}</h3>
+                                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">@{video.owner?.username}</p>
                             </div>
                         </Link>
-                        <button className="px-6 py-2 bg-primary-600 text-white rounded-full hover:bg-primary-700">
+                        <button className="px-4 sm:px-6 py-1.5 sm:py-2 bg-primary-600 text-white rounded-full hover:bg-primary-700 text-sm sm:text-base whitespace-nowrap">
                             Subscribe
                         </button>
                     </div>
 
                     {/* Description */}
-                    <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <p className="whitespace-pre-wrap text-sm">{video.description}</p>
+                    <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <p className="whitespace-pre-wrap text-xs sm:text-sm">{video.description}</p>
                     </div>
 
                     {/* Comments Section */}

@@ -32,8 +32,8 @@ export const Home = () => {
     };
 
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6">
+        <div className="p-4 sm:p-6">
+            <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
                 {searchParams.get('search') ? `Search results for "${searchParams.get('search')}"` : 'Home'}
             </h1>
             <VideoGrid videos={videos} loading={loading} />
