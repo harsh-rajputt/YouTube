@@ -15,6 +15,7 @@ import { History } from './pages/History';
 import { Playlists } from './pages/Playlists';
 import { Channel } from './pages/Channel';
 import { ProfileSettings } from './pages/ProfileSettings';
+import { Trending } from './pages/Trending';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -145,6 +146,14 @@ function AppContent() {
                 <ProfileSettings />
               </Layout>
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trending"
+          element={
+            <Layout>
+              <Trending />
+            </Layout>
           }
         />
       </Routes>

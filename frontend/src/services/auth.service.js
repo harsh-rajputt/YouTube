@@ -66,4 +66,10 @@ export const authService = {
         const response = await api.post('/users/change-password', data);
         return response.data;
     },
+
+    // Get watch history
+    getWatchHistory: async () => {
+        const response = await api.get('/users/watch-history');
+        return response.data;
+    },
 };

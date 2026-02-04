@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { videoService } from '../services/video.service';
 import { likeService } from '../services/like.service';
+import { subscriptionService } from '../services/subscription.service';
+import { channelService } from '../services/channel.service';
 import { useAuth } from '../context/AuthContext';
 import { Loader } from '../components/common/Loader';
 import { CommentSection } from '../components/video/CommentSection';
@@ -13,7 +15,7 @@ export const VideoDetail = () => {
     const [video, setVideo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isLiked, setIsLiked] = useState(false);
-    const [likesCount, setLikesCount] = useState(0);
+    const [isSubscribed, setIsSubscribed] = useState(false);
     const { user } = useAuth();
 
     useEffect(() => {
@@ -27,10 +29,16 @@ export const VideoDetail = () => {
             const videoData = response.data;
             setVideo(videoData);
 
-            // In a real app, the backend should return whether the current user liked it
-            // and the total likes count. For now, we'll just check if it's in liked videos if logged in.
-            if (user) {
-                const likedRes = await likeService.getLikedVideos();
+            if (user && videoData.owner?.username) {
+                const [likedRes, profileRes] = await Promise.all([
+                    likeService.getLikedVideos(),
+                    channelService.getChannelProfile(videoData.owner.username)
+                ]);
+
+                if (profileRes.data) {
+                    setIsSubscribed(profileRes.data.isSubscribed);
+                }
+
                 const likedVideos = likedRes.data || [];
                 setIsLiked(likedVideos.some(v => v._id === id));
             }
@@ -38,6 +46,19 @@ export const VideoDetail = () => {
             console.error('Failed to fetch video:', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSubscribe = async () => {
+        if (!user) {
+            alert('Please login to subscribe');
+            return;
+        }
+        try {
+            await subscriptionService.toggleSubscription(video.owner._id);
+            setIsSubscribed(!isSubscribed);
+        } catch (error) {
+            console.error('Failed to toggle subscription:', error);
         }
     };
 
@@ -136,8 +157,14 @@ export const VideoDetail = () => {
                                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">@{video.owner?.username}</p>
                             </div>
                         </Link>
-                        <button className="px-4 sm:px-6 py-1.5 sm:py-2 bg-primary-600 text-white rounded-full hover:bg-primary-700 text-sm sm:text-base whitespace-nowrap">
-                            Subscribe
+                        <button
+                            onClick={handleSubscribe}
+                            className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-bold transition-all transform active:scale-95 text-sm sm:text-base whitespace-nowrap ${isSubscribed
+                                ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700'
+                                : 'bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-500/20'
+                                }`}
+                        >
+                            {isSubscribed ? 'Subscribed' : 'Subscribe'}
                         </button>
                     </div>
 
