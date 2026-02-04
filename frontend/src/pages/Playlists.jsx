@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react';
-import { playlistService } from '../services/playlist.service';
-import { useAuth } from '../context/AuthContext';
-import { Loader } from '../components/common/Loader';
 import { PlaySquare } from 'lucide-react';
+import { Skeleton } from '../components/common/Skeleton';
 
 export const Playlists = () => {
     const [playlists, setPlaylists] = useState([]);
@@ -29,8 +26,17 @@ export const Playlists = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <Loader size="lg" />
+            <div className="p-4 sm:p-6">
+                <Skeleton className="h-8 w-48 mb-6" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {[...Array(4)].map((_, i) => (
+                        <div key={i} className="space-y-3">
+                            <Skeleton className="aspect-video w-full rounded-xl" />
+                            <Skeleton className="h-4 w-3/4" />
+                            <Skeleton className="h-3 w-1/2" />
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }

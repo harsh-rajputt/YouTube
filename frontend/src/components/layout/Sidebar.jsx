@@ -29,8 +29,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
             {/* Sidebar */}
             <aside
-                className={`fixed top-14 sm:top-16 left-0 bottom-0 w-64 bg-white dark:bg-gray-900 border-r border-gray-200 
-          dark:border-gray-800 z-40 transition-transform duration-300 lg:translate-x-0
+                className={`fixed top-14 sm:top-16 left-0 bottom-0 w-64 glass-sidebar z-40 transition-transform duration-300 lg:translate-x-0
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
             >
                 <div className="p-2 sm:p-4 space-y-1 overflow-y-auto h-full">

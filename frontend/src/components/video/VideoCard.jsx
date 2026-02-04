@@ -18,11 +18,11 @@ export const VideoCard = ({ video }) => {
         <Link to={`/video/${video._id}`} className="group">
             <div className="space-y-2">
                 {/* Thumbnail */}
-                <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-800">
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-200 dark:bg-gray-800 ring-1 ring-black/5 dark:ring-white/5 group-hover:shadow-xl group-hover:shadow-primary-500/20 transition-all duration-300">
                     <img
                         src={video.thumbnail}
                         alt={video.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     {video.duration && (
                         <span className="absolute bottom-2 right-2 px-2 py-1 bg-black bg-opacity-80 text-white text-xs rounded">

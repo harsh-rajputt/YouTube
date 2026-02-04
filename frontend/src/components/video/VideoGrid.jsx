@@ -1,11 +1,13 @@
 import { VideoCard } from './VideoCard';
-import { Loader } from '../common/Loader';
+import { VideoCardSkeleton } from '../common/Skeleton';
 
 export const VideoGrid = ({ videos, loading }) => {
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-[400px]">
-                <Loader size="lg" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                {[...Array(8)].map((_, i) => (
+                    <VideoCardSkeleton key={i} />
+                ))}
             </div>
         );
     }

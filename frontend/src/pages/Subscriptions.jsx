@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { subscriptionService } from '../services/subscription.service';
 import { useAuth } from '../context/AuthContext';
-import { Loader } from '../components/common/Loader';
+import { Skeleton } from '../components/common/Skeleton';
 import { Link } from 'react-router-dom';
 
 export const Subscriptions = () => {
@@ -29,8 +29,17 @@ export const Subscriptions = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <Loader size="lg" />
+            <div className="p-4 sm:p-6">
+                <Skeleton className="h-8 w-48 mb-6" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {[...Array(4)].map((_, i) => (
+                        <div key={i} className="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow">
+                            <Skeleton className="w-20 h-20 rounded-full mb-3" />
+                            <Skeleton className="h-4 w-3/4 mb-2" />
+                            <Skeleton className="h-3 w-1/2" />
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }
